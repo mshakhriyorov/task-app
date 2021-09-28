@@ -98,7 +98,7 @@ h2{
 
 section {
   height: 100vh;
-  /* overflow: hidden; */
+  overflow: auto;
 }
 
 .ant-menu-title-content{
@@ -119,5 +119,35 @@ section {
 }
 
 .ant-menu-item{
-  padding-left: 10px !important;
+  padding-left: 9px !important;
+}
+
+.ant-layout-sider-collapsed {
+  flex: 0 0 50px !important   ;
+    max-width: 50px !important;
+    min-width: 50px !important;
+    width: 50px !important;
+}
+
+.ant-tooltip-inner{
+  display: flex;
+  align-items: center;
+}
+
+/* table */
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
