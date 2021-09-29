@@ -7,6 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { IIFC } from "react-iifc";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -60,25 +61,32 @@ class Home extends React.Component {
           const [users, setUsers] = useState([]);
           const [searchUser, setSearchUser] = useState("");
           const [loading, setLoading] = useState(false);
-          const [data, setData] = useState(users);
-          const [order, setOrder] = useState("ASC");
+          const [pageNumber, setPageNumber] = useState(0);
 
-          const sorting = (col) => {
-            if(order === "ASC") {
-              const sorted = [...data].sort((a, b) => 
-                a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
-              );
-              setData(sorted);
-              setOrder("DSC");
+          const usersPerPage = 5;
+          const pagesVisited = pageNumber * usersPerPage;
+          const displayUsers = users.slice(pagesVisited, pagesVisited + usersPerPage).filter(val => {
+            if (searchUser === '') {
+              return val
+            } else if (
+              val.name.toLowerCase().includes(searchUser.toLowerCase()) ||
+              val.company.name.toLowerCase().includes(searchUser.toLowerCase())
+            ) {
+              return val;
             }
-            else if(order === "DSC") {
-              const sorted = [...data].sort((a, b) => 
-                a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
-              );
-              setData(sorted);
-              setOrder("ASC");
-            }
-          };
+            return false
+          }).map(kishi => (
+            <tr key={kishi.id}>
+              <td>{kishi.name}</td>
+              <td>{kishi.phone}</td>
+              <td>{kishi.company.name}</td>
+            </tr>
+          ));
+
+          const pageCount = Math.ceil(users.length / usersPerPage); 
+          const changePange = ({selected}) => {
+            setPageNumber(selected)
+          }
 
           useEffect(() => {
             axios.get('https://jsonplaceholder.typicode.com/users')
@@ -91,7 +99,7 @@ class Home extends React.Component {
               })
           }, [])
 
-          if(loading) {
+          if (loading) {
             return <h1>Loading...</h1>
           }
 
@@ -116,14 +124,14 @@ class Home extends React.Component {
                     className: 'trigger',
                     onClick: this.toggle,
                   })}
-                  <Search 
-                    placeholder="Search..." 
+                  <Search
+                    placeholder="Search..."
                     onChange={(event) => {
                       setSearchUser(event.target.value)
-                    }} 
-                    style={{ width: 200 }}  
+                    }}
+                    style={{ width: 200 }}
                   />
-                 
+
                 </Header>
                 <Content
                   className="site-layout-background"
@@ -136,33 +144,24 @@ class Home extends React.Component {
                   <table className="table table-bordered">
                     <thead>
                       <tr>
-                        <th onClick={()=>sorting("name")}>Name</th>
-                        <th onClick={()=>sorting("phone")}>Contact</th>
-                        <th onClick={()=>sorting("company.name")}>Company</th>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Company</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {
-                        users.filter(val => {
-                          if(searchUser === ''){
-                            return val
-                          } else if(
-                              val.name.toLowerCase().includes(searchUser.toLowerCase()) ||
-                              val.company.name.toLowerCase().includes(searchUser.toLowerCase())
-                            ){
-                            return val;
-                          }
-                          return false
-                        }).map(kishi => (
-                          <tr key={kishi.id}>
-                            <td>{kishi.name}</td>
-                            <td>{kishi.phone}</td>
-                            <td>{kishi.company.name}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
+                    <tbody>{ displayUsers }</tbody>
                   </table>
+                  <ReactPaginate 
+                        previousLabel={'<'}
+                        nextLabel={'>'}
+                        pageCount={pageCount}
+                        onPageChange={changePange}
+                        containerClassName={'paginationBtns'}
+                        previousLinkClassName={'previousBtn'}
+                        nextLinkClassName={'nextBtn'}
+                        disabledClassName={'pagination'}
+                        activeClassName={'paginationActive'}
+                      />
                 </Content>
               </Layout>
             </Layout>

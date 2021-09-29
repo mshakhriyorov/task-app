@@ -151,3 +151,29 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.paginationBtns{
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paginationBtns a{
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #2b2eff;
+  color: #2b2eff;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.paginationBtns a:hover,.paginationBtns a:focus, .paginationActive a{
+  color: #fff;
+  background-color: #2b2eff;
+  text-decoration: none ;
+  outline: none;
+}
