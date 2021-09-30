@@ -10,36 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactPaginate from 'react-paginate';
 
 
-
 const { Title } = Typography;
 const { Header, Sider, Content } = Layout;
 const { Search } = Input;
-
-// const columns = [
-//   // { dataField: 'id', text: '№', sort: true },
-//   { dataField: 'name', text: 'Name', sort: true, filter: textFilter()},
-//   { dataField: 'phone', text: 'Contact', sort: true },
-//   { dataField: 'company.name', text: 'Company', sort: true }
-// ]
-
-// const pagination = paginationFactory({
-//   page: 1,
-//   sizePerPage: 5,
-//   lastPageText: '>>',
-//   firstPageText: '<<',
-//   nextPageText: '>',
-//   prePageText: '<',
-//   showTotal: true,
-//   alwaysShowAllBtns: true,
-//   onPageChange: function (page, sizePerPage) {
-//     console.log('page', page);
-//     console.log('sizePerPage', sizePerPage);
-//   },
-//   onSizePerPageChange: function (page, sizePerPage) {
-//     console.log('page', page);
-//     console.log('sizePerPage', sizePerPage);
-//   }
-// })
 
 
 class Home extends React.Component {
@@ -83,8 +56,8 @@ class Home extends React.Component {
             </tr>
           ));
 
-          const pageCount = Math.ceil(users.length / usersPerPage); 
-          const changePange = ({selected}) => {
+          const pageCount = Math.ceil(users.length / usersPerPage);
+          const changePange = ({ selected }) => {
             setPageNumber(selected)
           }
 
@@ -103,9 +76,13 @@ class Home extends React.Component {
             return <h1>Loading...</h1>
           }
 
-          if (!isAuthenticated) return (
-            <Title>Hello, welcome to Task Application!</Title>
-          )
+          if (!isAuthenticated) {
+            return (
+              <>
+                <Title>Hello, welcome to Task Application!</Title>
+              </>
+            )
+          }
 
           return (
             <Layout>
@@ -149,19 +126,19 @@ class Home extends React.Component {
                         <th>Company</th>
                       </tr>
                     </thead>
-                    <tbody>{ displayUsers }</tbody>
+                    <tbody>{displayUsers}</tbody>
                   </table>
-                  <ReactPaginate 
-                        previousLabel={'<'}
-                        nextLabel={'>'}
-                        pageCount={pageCount}
-                        onPageChange={changePange}
-                        containerClassName={'paginationBtns'}
-                        previousLinkClassName={'previousBtn'}
-                        nextLinkClassName={'nextBtn'}
-                        disabledClassName={'pagination'}
-                        activeClassName={'paginationActive'}
-                      />
+                  <ReactPaginate
+                    previousLabel={'<'}
+                    nextLabel={'>'}
+                    pageCount={pageCount}
+                    onPageChange={changePange}
+                    containerClassName={'paginationBtns'}
+                    previousLinkClassName={'previousBtn'}
+                    nextLinkClassName={'nextBtn'}
+                    disabledClassName={'pagination'}
+                    activeClassName={'paginationActive'}
+                  />
                 </Content>
               </Layout>
             </Layout>

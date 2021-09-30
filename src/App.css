@@ -60,7 +60,7 @@ h2{
 }
 
 .login{
-  background-color: rgb(19, 224, 29) !important;
+  background-color: rgb(19, 224, 29);
 }
 
 #components-layout-demo-custom-trigger .trigger {
@@ -176,4 +176,8 @@ tr:nth-child(even) {
   background-color: #2b2eff;
   text-decoration: none ;
   outline: none;
+}
+
+tr:nth-child(even) {
+  background-color: grey !important;
 }
