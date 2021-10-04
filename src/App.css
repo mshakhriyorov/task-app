@@ -181,3 +181,9 @@ tr:nth-child(even) {
 tr:nth-child(even) {
   background-color: grey !important;
 }
+
+.paragraph{
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+}

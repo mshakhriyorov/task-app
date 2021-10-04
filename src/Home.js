@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Layout, Menu, Input, Image } from 'antd';
+import { Layout, Menu, Input, Image } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import "antd/dist/antd.css";
 import './App.css';
@@ -8,16 +8,17 @@ import { IIFC } from "react-iifc";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactPaginate from 'react-paginate';
+import PreHome from './PreHome';
 
 
-const { Title } = Typography;
+
 const { Header, Sider, Content } = Layout;
 const { Search } = Input;
 
 
 class Home extends React.Component {
   state = {
-    collapsed: false,
+    collapsed: true,
   };
 
   toggle = () => {
@@ -76,13 +77,7 @@ class Home extends React.Component {
             return <h1>Loading...</h1>
           }
 
-          if (!isAuthenticated) {
-            return (
-              <>
-                <Title>Hello, welcome to Task Application!</Title>
-              </>
-            )
-          }
+          if (!isAuthenticated) return <PreHome />
 
           return (
             <Layout>
